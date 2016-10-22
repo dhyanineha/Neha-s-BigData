@@ -1,0 +1,45 @@
+[cloudera@quickstart ~]$ cd /usr/lib/hadoop-mapreduce/
+[cloudera@quickstart hadoop-mapreduce]$ hadoop jar hadoop-mapreduce-examples.jar wordcount
+Usage: wordcount <in> [<in>...] <out>
+[cloudera@quickstart hadoop-mapreduce]$ echo "Hello World in HDFS"> /home/cloudera/testfile1
+[cloudera@quickstart hadoop-mapreduce]$ echo "Hadoop word countexample in HDFS"> /home/cloudera/testfile2
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfs -mkdir /user/cloudera/input
+mkdir: `/user/cloudera/input': File exists
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfs -put /home/cloudera/testfile1 /user/cloudera/input
+put: `/user/cloudera/input/testfile1': File exists
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfs -put /home/cloudera/testfile2 /user/cloudera/input
+put: `/user/cloudera/input/testfile2': File exists
+[cloudera@quickstart hadoop-mapreduce]$ hadoop jar hadoop-mapreduce-examples.jar wordcount /user/cloudera/input/user/cloudera/output
+Usage: wordcount <in> [<in>...] <out>
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfs -ls /user/cloudera/output
+ls: `/user/cloudera/output': No such file or directory
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfs -ls /user/cloudera/output
+ls: `/user/cloudera/output': No such file or directory
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfs -mkdir /user/cloudera
+mkdir: `/user/cloudera': File exists
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfs -ls /user/cloudera/output
+ls: `/user/cloudera/output': No such file or directory
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfs -mkdir /user/cloudera/output
+mkdir: Cannot create directory /user/cloudera/output. Name node is in safe mode.
+[cloudera@quickstart hadoop-mapreduce]$ sudo -u hdfs dfsadmin -safemode leave
+sudo: dfsadmin: command not found
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfsadmin -safemode leave
+Safe mode is OFF
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfs -ls /user/cloudera/output
+ls: `/user/cloudera/output': No such file or directory
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfs -mkdir /user/cloudera/output
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfs -cat/user/cloudera/output/partr00000
+-cat/user/cloudera/output/partr00000: Unknown command
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfs -cat /user/cloudera/output/partr00000
+cat: `/user/cloudera/output/partr00000': No such file or directory
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfs -mkdir /user/cloudera/output/partr00000
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfs -mkdir /user/cloudera/output/partr00000 /home/cloudera/wordcount.txt
+mkdir: `/user/cloudera/output/partr00000': File exists
+mkdir: `/home/cloudera/wordcount.txt': No such file or directory
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfs -ls /user/cloudera/output
+Found 1 items
+drwxr-xr-x   - cloudera cloudera          0 2016-10-11 13:51 /user/cloudera/output/partr00000
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfs -cat /user/cloudera/output/partr00000
+cat: `/user/cloudera/output/partr00000': Is a directory
+[cloudera@quickstart hadoop-mapreduce]$ hdfs dfs -get /user/cloudera/output/partr00000 /home/cloudera/wordcount.txt
+[cloudera@quickstart hadoop-mapreduce]$ 
